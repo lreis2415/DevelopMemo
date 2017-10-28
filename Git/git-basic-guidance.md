@@ -41,14 +41,10 @@ P.S. 如何在push的时候免输密码，可以参考这个[博客](http://www.
 因此，我们一般约定代码采用Linux编码，即 `LF \n`。打开Git shell进行如下设置：
 
 ```
-# AutoCRLF, 设置提交、检出时均不转换
-git config --global core.autocrlf false
+# AutoCRLF, 提交（commit）时转换为LF，检出（checkout）时不转换
+git config --global core.autocrlf input
 # SafeCRLF, 设置拒绝提交包含混合换行符的文件，并且在提交混合换行符的文件时给出警告，从而手动转换为LF换行符后提交
-# 对于Windows设置为true
-git config --global core.safecrlf true
-# 对于linux设置为false
-git config --global core.safecrlf false
-# 同时，在SEIMS/.gitattributes里我们已经设置了一些例外，如Windows批处理文件.bat即为CRLF
+git config --global core.safecrlf warn
 ```
 
 [返回目录](#目录)
@@ -137,7 +133,6 @@ git merge upstream/master
 [返回目录](#目录)
 
 ## 4.Subtree操作
-参考资料：[XA技术不宅的博客](http://aoxuis.me/post/2013-08-06-git-subtree)
 
 git subtree是一条git子命令，本质上subtree是一种合并策略，从git v1.5.2，官方就推荐使用subtree代替submodule，所以它并不需要保存`.submodule`这样的元信息，平时使用时你甚至可以忘掉有subtree的存在，只需子项目管理者在适当的时候与子项目库进行双向同步更新。
 
