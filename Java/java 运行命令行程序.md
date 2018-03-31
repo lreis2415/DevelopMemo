@@ -132,6 +132,7 @@ int exitValue = resultHandler.waitFor();//resultHandler.waitFor(5000);//等待5�
 >http://blog.csdn.net/fd_mas/article/details/50147701
 
 通过`PumpStreamHandler`截获进程的各种输出，包括`output` 和 `error stream`。
+
 ```java
 String cmdStr = "ping www.baidu.com";
 final CommandLine cmdLine = CommandLine.parse(cmdStr);
@@ -146,5 +147,6 @@ executor.setStreamHandler(new PumpStreamHandler(out));
 int exitValue = executor.execute(cmdLine);
 
 final String result =out.toString().trim();// out.toString("gbk"); //设置编码
-System.out.println(result);//这个result就是ping输出的结果。如果是JAVA程序，抛出了异常，也被它获取。
+System.out.println(result);
+//这个result就是ping输出的结果。如果是JAVA程序，抛出了异常，也被它获取。
 ```
