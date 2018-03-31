@@ -12,7 +12,7 @@
 
 ## 小组项目索引
 
-1. [CyberSoLIM](https://github.com/lreis2415/cybersolim)
+1. [CyberSoLIM](https://github.com/lreis2415/cybersolim)：SoLIM的Web版，编程语言为 Java 和 JavaScript (ES6)，采用前后端分离方式
 2. [SEIMS](https://github.com/lreis2415/SEIMS)：分布式流域过程模型及情景优化工具，编程语言为C++和Python
 3. [SimDTA](https://github.com/lreis2415/SimDTA)：简化数字地形分析软件，编程语言为VB6.0
 4. [AutoFuzSlpPos](https://github.com/lreis2415/AutoFuzSlpPos)：模糊坡位自动化提取软件，编程语言为C++
@@ -29,3 +29,15 @@
    + src文件夹：用于存放示例代码
    + QA文件夹：常见问题描述和解决方案，每个问题单独一个`md`文件，并在`README.md`中做好索引
 
+
+
+
+
+
+---
+
+### 个人博客
+
+- 侯志伟   https://houzw.github.io/
+
+  一些比较琐碎的、日常学习的内容，会放到博客中，感兴趣的可以参考。
