@@ -11,8 +11,11 @@ https://nodejs.org/zh-cn/
 
 ## 修改npm模块安装目录
 通过命令 `npm root -g` 查看可知默认的 node_modules 安装目录是 `${APPDATA}\npm`
+
 如果需要修改，找到nodejs的安装目录下的配置文件，如`D:\Program Files\nodejs\node_modules\npm\npmrc`文件，修改为目标目录，如`prefix=D:\npm`，保存之后再次查看，已经修改为新的目录。
-**注意**: 修改模块安装目录之后，需要相应地修改系统环境变量`PATH`，将`D:\npm`添加进去。否则会出现“xxx不是内部或外部命令，也不是可运行的程序或批处理文件”
+
+**注意**: 修改模块安装目录之后，需要相应地修改系统环境变量`PATH`，将`D:\npm`添加进去。否则会出现“xxx不是内部或外部命令，也不是可运行的程序或批处理文件
+
 npm安装后会默认添加用户环境变量 `C:\Users\houzhiwei\AppData\Roaming\npm`
 
 
@@ -21,12 +24,16 @@ npm安装后会默认添加用户环境变量 `C:\Users\houzhiwei\AppData\Roamin
 >https://npm.taobao.org/
 
 命令：`npm install -g cnpm --registry=https://registry.npm.taobao.org` 
+
 之后可以使用`cnpm`来安装模块：`cnpm install [name]`
 
 ## 安装模块
 `npm install html-loader --save-dev`  或 `npm i html-loader -D`
+
 表示：安装名称为 html-loader 的模块，加入到 package.json 的 开发环境依赖 "devDependencies" 中
+
 `npm install html-loader --save`或`npm i html-loader -S`  则是生产环境依赖 “dependencies”
+
 ## 卸载模块
 `npm uninstall [<@scope>/]<pkg>[@<version>]... [-S|--save|-D|--save-dev|-O|--save-optional]`
 ## 更新
