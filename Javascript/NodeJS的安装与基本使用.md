@@ -45,7 +45,8 @@ npm安装后会默认添加用户环境变量 `C:\Users\houzhiwei\AppData\Roamin
 
 ### 使用 npm-check-updates 监测并更新
 >https://www.npmjs.com/package/npm-check-updates
-http://www.hostingadvice.com/how-to/update-npm-packages/
+>
+>http://www.hostingadvice.com/how-to/update-npm-packages/
 
 `npm install -g npm-check-updates`
 

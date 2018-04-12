@@ -55,4 +55,29 @@ axios.post('/foo', querystring.stringify({
 this.$http.post('/project/create', this.project, { params: { a: 'test' } }
 ).then(）
 ```
+后台
 `@RequestParam String a`
+### Spring MVC接收 JSON 类型参数
+在方法参数中使用注解`@RequestBody `绑定 json 到实体类 POJO
+```java
+@PostMapping("login")
+public ResponseEntity userLogin(@RequestBody UserCredentials userCredentials){
+     UserInfo user = userService.userLogin(userCredentials.getEmail(),userCredentials.getPassword(), userCredentials.isRememberMe());
+    String token = jwtService.createUserJwt(user, null);
+    HttpHeaders headers = new HttpHeaders();
+    headers.set(JwtConsts.HEADER_STRING, JwtConsts.TOKEN_PREFIX + token);
+    return new ResponseEntity<UserInfo>(headers, HttpStatus.OK)       
+}
+```
+或者，通过`@RequestBody `注解，把 json 中的数据绑定到 Map 中
+```java
+@RequestMappting("/api/doLogin")
+@ResponseBody
+public Object doLogin(@RequestBody Map map) throws Exception {
+  System.out.println("username: "+map.get("username"));
+  System.out.println("password: "+map.get("password"));
+  JSONObject json = new JSONObject();
+  json.put("success", true);
+  return json;
+}
+```
