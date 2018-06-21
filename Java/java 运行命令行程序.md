@@ -128,6 +128,10 @@ int exitValue = resultHandler.waitFor();//resultHandler.waitFor(5000);//等待5�
 之后，可以通过`resultHandler.hasResult()`、`resultHandler.getExitValue()`、`resultHandler.getException()`获得需要信息。 
 注意：`getException();`得到的是Exec自己的异常，不是应用程序(比如JAVA)代码里面抛出的异常。
 
+若报错 `The process has not exited yet therefore no result is available`
+
+说明没有加` resultHandler.waitFor();`
+
 #### 获得进程输出信息
 >http://blog.csdn.net/fd_mas/article/details/50147701
 
@@ -150,3 +154,7 @@ final String result =out.toString().trim();// out.toString("gbk"); //设置编�
 System.out.println(result);
 //这个result就是ping输出的结果。如果是JAVA程序，抛出了异常，也被它获取。
 ```
+
+### 实例
+
+http://commons.apache.org/proper/commons-exec/xref-test/org/apache/commons/exec/TutorialTest.html

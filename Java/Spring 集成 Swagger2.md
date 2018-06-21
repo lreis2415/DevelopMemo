@@ -1,5 +1,13 @@
 # Spring 集成 Swagger2
 
+Swagger 号称：世界最流行的API框架
+
+官网：http://swagger.io/
+
+解决什么问题：在前后台分离的开发模式中，减小接口定义沟通成本，方便开发过程中测试，自动生成接口文档。
+
+该框架为创建 JSON 或 [YAML](http://www.yaml.org/)（JSON 的一个人性化的超集）格式的 RESTful API 文档提供了 [OpenAPI 规范](http://swagger.io/specification/)（以前称为 Swagger 规范）。Swagger 文档可由各种编程语言处理，可在软件开发周期中签入源代码控制系统中，以便进行版本管理。
+
 ## Maven 
 
 ```xml
@@ -121,13 +129,8 @@ public ApiResult getUserByName(@ApiParam(required = true, name = "name", value =
 public RestfulProtocol remove(Long id){}
 ```
 
-  上述代码是Controller中的一个方法，`@ApiOperation`注解对这个方法进行了说明，`@ApiParam`注解对方法参数进行了说明。关于这两个注解的使用，可以参看源码。这样子，Swagger就可以扫描接口方法，得到我们自定义的接口说明内容。
+      
 
-说明： 
-     其中`@ApiOperation`和`@ApiParam`为添加的API相关注解，个参数说明如下： 
-     @ApiOperation(value = “接口说明”, httpMethod = “接口请求方式”, response = “接口返回参数类型”, notes = “接口发布说明”；其他参数可参考源码； 
-     @ApiParam(required = “是否必须参数”, name = “参数名称”, value = “参数具体描述”
-     
 ## Restful API 访问  
 
 `http://IP:port/{context-path}/swagger-ui.html  `
@@ -159,26 +162,23 @@ public RestfulProtocol remove(Long id){}
 2. **与接口相关的注解**
 
    - **@Api：用在controller上，对controller进行注释；**
-   - **@ApiOperation：用在API方法上，对该API做注释，说明API的作用；**
-
+   - **@ApiOperation：用在API方法上，对该API做注释。**      `@ApiOperation(value = “接口说明”, httpMethod = “接口请求方式”, response = “接口返回参数类型”, notes = “接口发布说明”）`；其他参数可参考源码； 
+   - `@ApiParam(required = “是否必须参数”, name = “参数名称”, value = “参数具体描述”)`
    - **@ApiImplicitParams：用来包含API的一组参数注解，可以简单的理解为参数注解的集合声明；** 
-
    - **@ApiImplicitParam：用在@ApiImplicitParams注解中，也可以单独使用，说明一个请求参数的各个方面，该注解包含的常用选项有：**
 
      - paramType：参数所放置的地方，包含query、header、path、body以及form，最常用的是前四个。
      - name：参数名；
-     - dataType：参数类型，可以是基础数据类型，也可以是一个class；
+     - dataType：参数类型，可以是基础数据类型，也可以是一个class的名称，如`dataType = "GroupInfo"`；配合使用  `dataTypeClass = GroupInfo.class`
      - required：参数是否必须传；
      - value：参数的注释，说明参数的意义；
      - defaultValue：参数的默认值；
-
    - **@ApiResponses：通常用来包含接口的一组响应注解，可以简单的理解为响应注解的集合声明；**
-
    - **@ApiResponse：用在@ApiResponses中，一般用于表达一个响应信息**
 
      - **code：即httpCode，例如400** 
      - **message：信息，例如"操作成功"**
-     - **response = UserVo.class  这里UserVo是一个配置了@ApiModel注解的对像，该是对像属性已配置 ****
+     - **response = UserVo.class  这里UserVo是一个配置了@ApiModel注解的对像，该是对像属性已配置**
    - **@ApiModelProperty,swagger可以通过这些配置，生成接口返回值**
 
 

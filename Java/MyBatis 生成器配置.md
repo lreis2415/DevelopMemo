@@ -1,8 +1,10 @@
-# MyBatis 生成器配置
+# MyBatis 代码生成器配置
 
-## cybersolim项目中的生成器配置
+## Cybersolim项目中的生成器配置
 
 以下为 cybersolim项目中使用的生成器配置，其中使用了自己开发的生成器插件。
+
+### resources/generatorConfig.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -59,21 +61,105 @@
                              targetProject="${mbg.mapperTargetProj}">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <!--生成数据表设置-->
-        <!--<table tableName="t_user_info" domainObjectName="UserInfo">-->
-            <!--<property name="ignoreQualifiersAtRuntime" value="true"/>-->
-            <!--<property name="useActualColumnNames" value="false"/>-->
-            <!--<generatedKey column="user_id" sqlStatement="SELECT nextval('t_user_info_user_id_seq')"-->
-                          <!--identity="true"/>-->
-        <!--</table>-->
-
-        <table tableName="pointcloud_formats" domainObjectName="PointcloudFormats">
+        <!--生成数据表设置--postgresql-->
+        <!--<table tableName="t_user" domainObjectName="User">
             <property name="ignoreQualifiersAtRuntime" value="true"/>
             <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="SELECT currval('t_user_id_seq')"
+                          identity="true"/>
+        </table>-->
+
+         <!--生成数据表设置--mysql-->
+        <table tableName="t_user" domainObjectName="User">
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="user_id" sqlStatement="Mysql" identity="true"/>
         </table>
     </context>
 </generatorConfiguration>
 ```
+
+### resources/config/db.properties
+
+```properties
+# ---- 数据库连接信息 ---- #
+# postgresql数据库
+db.driverClass=org.postgresql.Driver
+# db.driverLoc=src/main/resources/postgresql-9.4.1211.jar
+db.username=admin
+db.password=egc
+db.url=jdbc:postgresql://127.0.0.1:5432/solim
+# mysql数据库
+# db.driverClass = com.mysql.jdbc.Driver
+# db.url = jdbc:mysql://localhost:3306/mysql
+# db.password = test
+# db.username = tester
+
+# ---- mybatis生成器配置 ----#
+# 目标项目（路径）：
+# 单模块项目 targetProject="src/main/java"
+# 多模块项目 targetProject="所属模块的名称"
+mbg.modelTargetProj=../cybersolim-domain/src/main/java
+mbg.mapperTargetProj=./src/main/java
+mbg.serviceTargetProj=../cybersolim-service/src/main/java
+
+# package
+mbg.daoPkg=org.egc.cybersolim.dao
+mbg.xmlPkg=org.egc.cybersolim.xml
+mbg.modelPkg=org.egc.cybersolim.domain
+mbg.servicePkg=org.egc.cybersolim.service
+mbg.serviceImplPkg=org.egc.cybersolim.service.impl
+```
+
+### pom.xml
+
+```xml
+<!--properties-->
+<mybatis-generator.version>1.3.5</mybatis-generator.version>
+<mybatis-baseservice.version>1.1.2-SNAPSHOT</mybatis-baseservice.version>
+
+<!--dependencies-->
+
+<!--
+   自定义的生成器插件，里面有BaseMapper、BaseService及其实现类，所以dao/service模块都需要
+   源码：https://gitee.com/vtech/mybatis-baseservice
+-->
+<dependency>
+    <groupId>com.vtech</groupId>
+    <artifactId>mybatis-baseservice</artifactId>
+    <version>${mybatis-baseservice.version}</version>
+</dependency>
+
+<!--build > plugins-->
+<plugin>
+    <groupId>org.mybatis.generator</groupId>
+    <artifactId>mybatis-generator-maven-plugin</artifactId>
+    <version>${mybatis-generator.version}</version>
+    <!--自定义的生成器插件-->
+    <dependencies>
+        <dependency>
+            <groupId>com.vtech</groupId>
+            <artifactId>mybatis-baseservice</artifactId>
+            <version>${mybatis-baseservice.version}</version>
+        </dependency>
+         <!--数据库驱动-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${psql.java8.version}</version>
+        </dependency>
+    </dependencies>
+    <configuration>
+        <verbose>true</verbose>
+        <!--覆盖原来生成的-->
+        <overwrite>true</overwrite>
+    </configuration>
+</plugin>
+```
+
+
+
+---
 
 ## 原生生成器Mybatis Generator的介绍
 
