@@ -32,7 +32,7 @@ categories:
 > https://github.com/kohsuke/winsw/releases
 
 - 将下载的winsw的exe放到nginx安装目录下，并重命名为`nginx-service `
-- 新建`nginx-service.xml`文件（须与可执行文件名相同），其内容如下（executable目录不能由空格）
+- 新建`nginx-service.xml`文件（须与可执行文件名相同），其内容如下（executable目录不能有空格）
 
  ```xml
 <service>    
@@ -158,11 +158,11 @@ http {
             #定义首页索引文件的名称
             index index.php index.html index.htm;   
         }
- 		# 反向代理
-		location /solim {
-			proxy_pass http://localhost:8080/cybersolim;
-			proxy_set_header  X-Real-IP  $remote_addr;
-		}
+        # 反向代理
+        location /solim {
+             proxy_pass http://localhost:8080/cybersolim;
+             proxy_set_header  X-Real-IP  $remote_addr;
+        }
 		
         # 定义错误提示页面
         error_page   500 502 503 504 /50x.html;
@@ -175,12 +175,12 @@ http {
             #如果频繁更新，则可以设置得小一点。
             expires 30d;
         }
- 		# 静态文件
-		location ~* \.(html|htm|gif|jpg|jpeg|bmp|png|ico|txt|js|css)$ {         
-			# 过期时间，d 表示 天， 如果频繁更新，可以设置得小一点。
-			expires 30d;
-			access_log off;
-		}
+        # 静态文件
+        location ~* \.(html|htm|gif|jpg|jpeg|bmp|png|ico|txt|js|css)$ {         
+             # 过期时间，d 表示 天， 如果频繁更新，可以设置得小一点。
+             expires 30d;
+             access_log off;
+        }
         #PHP 脚本请求全部转发到 FastCGI处理. 使用FastCGI默认配置.
         location ~ .php$ {
             fastcgi_pass 127.0.0.1:9000;
@@ -199,7 +199,7 @@ http {
 
 ### Location 
 
-####匹配规则
+#### 匹配规则
 
 ```yaml
 =     # 进行普通字符精确匹配
@@ -209,7 +209,7 @@ http {
 @     # "@" 定义一个命名的 location，使用在内部定向时，例如 error_page, try_files
 ```
 
-####优先级：
+#### 优先级：
 
 1. =前缀的指令严格匹配这个查询。如果找到，停止搜索。
 2. 所有剩下的常规字符串，最长的匹配。如果这个匹配使用^〜前缀，搜索停止。
@@ -224,7 +224,7 @@ http {
 
 Nginx 默认返回html形式的错误信息。若需要返回JSON格式，则参考以下示例：
 
-```json
+```jade
 location /500 {
     default_type application/json;
     return 500 '{"code":500, "message": "Unknown Error"}';
