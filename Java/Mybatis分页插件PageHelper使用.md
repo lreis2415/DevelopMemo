@@ -40,7 +40,9 @@ public Map<String, Object> queryByType(@RequestParam("types[]") String[] types, 
         PageHelper.startPage(offset / limit + 1, limit);
     	// PageHelper.startPage(pageNum,pageSize);
         List<Res> list = resService.queryByParentCode(querytype);
+    
         PageInfo pageInfo = new PageInfo(list);//分页信息
+    
         DataTable dt = new DataTable(list, pageInfo.getTotal());
         dt.setPageNumber(pageInfo.getPageNum());
         dt.setPageSize(pageInfo.getPageSize());
