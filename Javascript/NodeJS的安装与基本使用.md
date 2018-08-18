@@ -106,3 +106,11 @@ Commands:
 
 升级到最新稳定版：`n stable`
 `n`后面可以是：`latest `、`stable`、`lts `（最新长期维护版Node）、`<version> `
+
+> 若更新到最新版本后报错，如 
+>
+> Module build failed: Error: Missing binding F:\workspace\cybersolim-v2\cybersolim-frontend\node_modules\.4.9.2@node-sass\vendor\win32-x64-64\binding.node
+> Node Sass could not find a binding for your current environment: Windows 64-bit
+> with Node.js 10.x
+>
+> 则在项目根目录下执行 `npm rebuild node-sass`
