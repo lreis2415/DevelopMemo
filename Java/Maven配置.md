@@ -56,7 +56,8 @@ Maven 私服是指自己/其他公司搭建的私有或公有Maven仓库，区�
     <id>nexus</id>
     <mirrorOf>external:*,!osgeo,!geosolutions</mirrorOf>
     <name>MyNexus</name>
-    <url>http://192.168.6.147:8181/nexus/content/groups/public</url>
+    <!-- 	你的私服地址（此处为示例），私服配置好之后可以在浏览器中打开   -->
+    <url>http://192.168.6.7:8080/nexus/content/groups/public</url>
 </mirror>
 <!-- 	osgeo   -->
 <mirror>
@@ -80,8 +81,6 @@ Maven 私服是指自己/其他公司搭建的私有或公有Maven仓库，区�
     <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
 </mirror>
 ```
-
->   注：地址 [http://192.168.6.147:8181/nexus/](http://192.168.6.147:8181/nexus/#welcome) 可以在浏览器中打开，从而可以浏览仓库中包含的库
 
 #### 配置 profiles
 
@@ -142,19 +141,19 @@ Maven 私服是指自己/其他公司搭建的私有或公有Maven仓库，区�
 <server>
     <id>nexus-snapshots</id>
     <username>admin</username>
-    <password>simdta</password>
+    <password>your-pwd</password>
 </server>
 <!-- 发布版本，如 <version>2.0-RELEASE</version> -->
 <server>
     <id>nexus-releases</id>
     <username>admin</username>
-    <password>simdta</password>
+    <password>your-pwd</password>
 </server>
 <!-- 部署到tomcat -->
 <server>
     <id>tomcat7</id>
     <username>admin</username>
-    <password>tomcatadmin</password>
+    <password>your-pwd</password>
 </server>
 ```
 
