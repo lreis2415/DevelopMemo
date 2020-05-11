@@ -81,3 +81,24 @@ public Object doLogin(@RequestBody Map map) throws Exception {
   return json;
 }
 ```
+
+### 结合FormData上传文件
+
+需要设置传输数据类型为'multipart/form-data'
+
+```Javascript
+let formData = new FormData()
+ formData.append('name', this.name)
+ formData.append('file', this.file)
+ let config = {
+   headers: {
+      'Content-Type': 'multipart/form-data'
+   }
+ }
+ this.$http.post('/myupload', formData, config).then(res=>{
+    if (res.status === 200) {
+     /*这里做处理*/
+    }
+ })
+```
+

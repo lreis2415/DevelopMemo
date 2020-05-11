@@ -22,6 +22,14 @@
   render: ( h, params ) => {
       return h('div', moment(params.row.groupCreateTime).format("YYYY:MM:DD"));
   }
+  
+  //还可以进行判断
+  render: function (h, params) {
+     if(this.row.createTime)  
+           return h('div', new Date(this.row.createTime).Format('yyyy-MM-dd')); 
+     else
+           return h('div', ""); 
+   }
   ```
 
 - 通过table的slot来实现自定义列 
@@ -49,5 +57,3 @@
     )
   }
   ```
-
-  

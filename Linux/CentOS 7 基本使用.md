@@ -71,9 +71,15 @@ vim /etc/sudoers
 
 使用`systemctl status firewalld`查看状态，若为`Active: inactive (dead) ` 或执行命令时显示` FirewallD is not running`，可以执行 `systemctl start firewalld`  开启防火墙。
 
+可视化管理
+
+`firewall-config &`
+
 开启端口
 
 `firewall-cmd --zone=public --add-port=80/tcp --permanent`
+
+>有 runtime 和 permanent 设定两种，runtime  设定 reload 后会恢复原状态，而 permanent  不会。 
 
 重启防火墙
 
@@ -82,6 +88,10 @@ vim /etc/sudoers
 添加 EPEL源（ Extra Packages for Enterprise Linux）
 
 `sudo yum install epel-release` 
+
+**Zone**
+
+![这里写图片描述](../../github-blogs/source/_posts/CentOS 7 基本使用/SouthEast)
 
 ## 查看帮助
 http://www.centoscn.com/CentOS/help/2014/0220/2419.html
@@ -256,12 +266,32 @@ yum update; yum install ntfs-3g # 更新？
 yum install ntfs-3g
 ```
 
-##进程总数
+##进程
+
+> 程序后台运行（即使关闭终端）：`nohup 命令&`
 
 ```shell
+# 进程总数
 ps -ef| wc -l
 ps -ef| grep httpd | wc -l
+ps -aux | grep '进程名称'
+# ps -au(x) 输出格式 :
+# USER PID %CPU（占用率） %MEM VSZ（占用虚拟内存） RSS（占用内存） TTY（minor device number of tty） STAT（状态） START（开始时间） TIME（执行时间） COMMAND（执行命令）
 ```
+
+​    ps a 显示现行终端机下的所有程序，包括其他用户的程序。
+​    ps -A 显示所有程序。
+​    ps c 列出程序时，显示每个程序真正的指令名称，而不包含路径，参数或常驻服务的标示。
+​    ps -e 此参数的效果和指定"A"参数相同。
+​    ps e 列出程序时，显示每个程序所使用的环境变量。
+​    ps f 用ASCII字符显示树状结构，表达程序间的相互关系。
+​    ps -H 显示树状结构，表示程序间的相互关系。
+​    ps -N 显示所有的程序，除了执行ps指令终端机下的程序之外。
+​    ps s 采用程序信号的格式显示程序状况。
+​    ps S 列出程序时，包括已中断的子程序资料。
+​    ps -t<终端机编号> 指定终端机编号，并列出属于该终端机的程序的状况。
+​    ps u 以用户为主的格式来显示程序状况。
+​    ps x 显示所有程序，不以终端机来区分。
 
 ##[Linux查看物理CPU个数、核数、逻辑CPU个数](https://www.cnblogs.com/emanlee/p/3587571.html)
 
@@ -308,35 +338,38 @@ find . -type f -size +800M  -print0 | xargs -0 du -h
 
 ##关机
 
-Linux命令：shutdown
+- `shutdown`
 
-功能说明：系统关机指令。
+    功能说明：系统关机指令。
 
-语　　法：`shutdown [-efFhknr][-t 秒数][时间][警告信息]`
+    语　　法：`shutdown [-efFhknr][-t 秒数][时间][警告信息]`
 
-补充说明：shutdown指令可以关闭所有程序，并依用户的需要，进行重新开机或关机的动作。
+    补充说明：shutdown指令可以关闭所有程序，并依用户的需要，进行重新开机或关机的动作。
 
- 
+     
 
-参　　数：
+    参　　数：
 
--c 　当执行"shutdown -h 11:50"指令时，只要按+键就可以中断关机的指令。
+    `-c `　当执行"`shutdown -h 11:50`"指令时，只要按+键就可以中断关机的指令。
 
--f 　重新启动时不执行fsck（磁盘维护）。
+    `-f `　重新启动时不执行 fsck（磁盘维护）。
 
--F 　重新启动时执行fsck。
+    `-F `　重新启动时执行 fsck。
 
--h 　将系统关机。
+    `-h `　将系统关机，关闭电源。如`shutdown -h now`,  `shutdown -h 10`
 
--k 　只是送出信息给所有用户，但不会实际关机。
+    `-k `　只是送出信息给所有用户，但不会实际关机。
 
--n 　不调用init程序进行关机，而由shutdown自己进行。
+    `-n` 　不调用init程序进行关机，而由shutdown自己进行。
 
--r 　shutdown之後重新启动。
+    `-r` 　shutdown之後重新启动。
 
--t<秒数> 　送出警告信息和删除信息之间要延迟多少秒。
+    `-t<秒数>` 　送出警告信息和删除信息之间要延迟多少秒。
 
-[时间]  设置多久时间後执行shutdown指令。
+    `[时间]`  设置多久时间後执行shutdown指令。
 
-[警告信息] 　要传送给所有登入用户的信息。
+    `[警告信息] `　要传送给所有登入用户的信息。
 
+- `halt` 相当于`shutdown -h`，其他参数` halt -help`
+
+- `reboot` 关机并自动重启
