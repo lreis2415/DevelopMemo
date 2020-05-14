@@ -73,13 +73,13 @@ Maven 私服是指自己/其他公司搭建的私有或公有Maven仓库，区�
     <name>geosolutions repository</name>
     <url>http://maven.geo-solutions.it/</url>
 </mirror>
-<!-- 	阿里的Maven镜像。用阿里的Maven镜像取代中央仓库   -->
-<mirror>
+<!-- 阿里的Maven镜像。用阿里的Maven镜像取代中央仓库。若配置了私有仓库，需要把这部分注释掉   -->
+<!-- <mirror>
     <id>alimaven</id>
     <mirrorOf>central</mirrorOf>
     <name>aliyun maven</name>
     <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-</mirror>
+</mirror>  -->
 ```
 
 #### 配置 profiles
@@ -157,7 +157,61 @@ Maven 私服是指自己/其他公司搭建的私有或公有Maven仓库，区�
 </server>
 ```
 
+---
 
+### 刷新maven还是无法下载jar包
+
+可能是在相应的目录下存在`.lastUpdated`文件，需要删掉这个文件之后再刷新
+
+1、cleanLastUpdated.bat（windows版本）
+
+```bash
+ @echo off
+    rem create by NettQun
+      
+    rem 这里写你的仓库路径
+    set REPOSITORY_PATH=D:\Java\maven-repository\maven-aliyun\repository
+    rem 正在搜索...
+    for /f "delims=" %%i in ('dir /b /s "%REPOSITORY_PATH%\*lastUpdated*"') do (
+        echo %%i
+        del /s /q "%%i"
+    )
+    rem 搜索完毕
+    pause
+```
+
+​    2、cleanLastUpdated.sh（linux版本）
+
+```bash
+ 
+    # 这里写你的仓库路径
+    REPOSITORY_PATH=~/Documents/tools/repository
+    echo 正在搜索...
+    find $REPOSITORY_PATH -name "*lastUpdated*" | xargs rm -fr
+    echo 搜索完
+```
+
+---
+
+### 使用本地 JAR 包，而非repository中的
+
+```XML
+<dependency>
+    <groupId>org.hamcrest</groupId>
+    <artifactId>hamcrest-core</artifactId>
+    <version>1.5</version>
+    <!-- 下述二者缺一不可 -->
+    <scope>system</scope>
+    <systemPath>${basedir}/lib/hamcrest-core-1.3.jar</systemPath>
+</dependency>
+```
+
+### 安装jar包到本地仓库
+
+```shell
+mvn install:install-file -Dfile=jar包的位置 -DgroupId=groupId 
+-DartifactId=artifactId -Dversion=version -Dpackaging=jar 
+```
 
 ---
 
