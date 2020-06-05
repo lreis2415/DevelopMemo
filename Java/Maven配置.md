@@ -1,5 +1,7 @@
 # Java 开发环境——Maven配置
 
+[toc]
+
 Maven是一个项目管理和综合工具。[Maven](http://www.yiibai.com/maven)提供了开发人员构建一个完整的生命周期框架。开发团队可以自动完成项目的基础工具建设，Maven使用标准的目录结构和默认构建生命周期。
 
 在多个开发团队环境时，Maven可以设置按标准在非常短的时间里完成配置工作。由于大部分项目的设置都很简单，并且可重复使用，Maven让开发人员的工作更轻松，同时创建报表，检查，构建和测试自动化设置。
@@ -24,24 +26,26 @@ Maven是一个项目管理和综合工具。[Maven](http://www.yiibai.com/maven)
 
 -   >   本地仓库用于存放从远程仓库下载的 jar,这样所有用Maven管理的项目可以通用，无需每个项目都添加 lib
 
--   配置好Maven之后，还需要在IDE中配置。一般IDE如IDEA、MyEclipse等都内置了Maven插件。使用时只需将IDE 内置的Maven配置指向自定义的配置即可。下图为IDEA中配置Maven，MyEclipse等类似。
+-   配置好Maven之后，还需要在IDE中配置。一般IDE如IDEA、MyEclipse等都内置了Maven插件。使用时只需将IDE 内置的Maven配置指向自定义的配置即可。
 
-    ![](http://ofcj2lgtd.bkt.clouddn.com/242967015.png)
+    -   注意：最好在` File | Other Settings | Settings for new projects`中设置，这样不用每次新建或导入maven项目都需要更改项目的maven配置
 
 -   配置好之后，就可以在项目的 POM.xml 中添加 库 的Maven坐标，从而将相应的库添加在项目依赖中。一般从[Maven中央仓库](http://mvnrepository.com/)中查找库的坐标。
 
     >```xml
     ><!--google通用类库坐标-->
     > <dependency>
-    >     <groupId>com.google.guava</groupId>
-    >     <artifactId>guava</artifactId>
-    >     <version>19.0</version>
+    >     	<groupId>com.google.guava</groupId>
+    >     	<artifactId>guava</artifactId>
+    >     	<version>19.0</version>
     ></dependency>
     >```
 
 ### Maven 私服配置
 
 Maven 私服是指自己/其他公司搭建的私有或公有Maven仓库，区别于[Maven中央仓库](http://mvnrepository.com/)。我们可以在中央仓库中查找 jar 的坐标，添加到POM文件中。maven首先会从私服中查找，没有的话私服会从中央仓库下载并保存，然后maven再从私服中下载到本地仓库。私服可以加快 jar 的下载，同时我们也可以发布自己的 jar 到私服。
+
+> nexus 不仅可以代理maven仓库，也可以代理 npm 等其他仓库
 
 #### 配置中央仓库镜像
 
@@ -59,13 +63,29 @@ Maven 私服是指自己/其他公司搭建的私有或公有Maven仓库，区�
     <!-- 	你的私服地址（此处为示例），私服配置好之后可以在浏览器中打开   -->
     <url>http://192.168.6.7:8080/nexus/content/groups/public</url>
 </mirror>
+<!-- 	
+下面的三个都可以配置到nexus中做代理。
+此时可以不在本地配置，并从上面的 mirrorOf 列表中删除
+ -->
 <!-- 	osgeo   -->
 <mirror>
     <id>osgeo</id>
     <mirrorOf>osgeo</mirrorOf>
     <name>Open Source Geospatial Foundation Repository</name>
-    <url>http://download.osgeo.org/webdav/geotools/</url>
+    <url>https://repo.osgeo.org/</url>
 </mirror>
+<mirror>
+    <id>boundless</id>
+    <mirrorOf>boundlessgeo</mirrorOf>
+    <name>Boundlessgeo Repository</name>
+    <url>https://repo.boundlessgeo.com/main/</url>
+</mirror> 
+<mirror>
+     <id>n52-wps</id>
+     <mirrorOf>n52-releases</mirrorOf>
+     <name>52n Releases</name>
+     <url>http://52north.org/maven/repo/releases</url>
+ </mirror>
 <!-- 	geosolutions   -->
 <mirror>
     <id>geosolutions</id>
@@ -159,6 +179,30 @@ Maven 私服是指自己/其他公司搭建的私有或公有Maven仓库，区�
 
 ---
 
+## 常见问题
+
+### 无法下载依赖
+
+- 检查 maven 配置文件 `settings.xml`, 查看仓库地址是否可访问。
+
+    - 对于 EGC 项目，需要配置我们自己的仓库地址（nexus）
+
+    - 一般的项目，推荐使用 阿里云的maven 镜像
+
+        ```xml
+        <!-- 不能使用nexus时才需要  -->
+        <mirror>
+          <id>alimaven</id>
+          <mirrorOf>central</mirrorOf>            
+          <name>aliyun maven</name>
+          <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </mirror> 
+        ```
+
+- 检查 IDE 中的maven 配置。尤其是新建的项目，其默认的maven是IDE 自带的，只会从 maven 中央仓库下载，速度慢，而且没有我们自己上传的包（例如 `gdal-gisinternals`）
+
+- 修改配置后可能需要刷新maven，或者重启 IDE
+
 ### 刷新maven还是无法下载jar包
 
 可能是在相应的目录下存在`.lastUpdated`文件，需要删掉这个文件之后再刷新
@@ -170,7 +214,7 @@ Maven 私服是指自己/其他公司搭建的私有或公有Maven仓库，区�
     rem create by NettQun
       
     rem 这里写你的仓库路径
-    set REPOSITORY_PATH=D:\Java\maven-repository\maven-aliyun\repository
+    set REPOSITORY_PATH=D:\maven-repository
     rem 正在搜索...
     for /f "delims=" %%i in ('dir /b /s "%REPOSITORY_PATH%\*lastUpdated*"') do (
         echo %%i
@@ -183,7 +227,6 @@ Maven 私服是指自己/其他公司搭建的私有或公有Maven仓库，区�
 ​    2、cleanLastUpdated.sh（linux版本）
 
 ```bash
- 
     # 这里写你的仓库路径
     REPOSITORY_PATH=~/Documents/tools/repository
     echo 正在搜索...
@@ -206,7 +249,7 @@ Maven 私服是指自己/其他公司搭建的私有或公有Maven仓库，区�
 </dependency>
 ```
 
-### 安装jar包到本地仓库
+### 直接安装jar包到本地仓库
 
 ```shell
 mvn install:install-file -Dfile=jar包的位置 -DgroupId=groupId 

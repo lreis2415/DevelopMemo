@@ -158,3 +158,9 @@ System.out.println(result);
 ### 实例
 
 http://commons.apache.org/proper/commons-exec/xref-test/org/apache/commons/exec/TutorialTest.html
+
+
+
+---
+
+https://github.com/lreis2415/egc-commons 中包含一些使用 Apache Commons Exec 的方法，简化代码编写
