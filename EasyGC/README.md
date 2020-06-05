@@ -37,6 +37,7 @@ https://github.com/lreis2415/cybersolim
 ## 代码执行基本流程
 
 ```sequence
+title: 代码执行基本流程图
 用户界面 | Vue 组件-> Axios get/post: vue method 中方法
 Axios get/post -> Controller: 发送请求+数据
 Controller->Service: 调用实际业务逻辑
