@@ -1,5 +1,7 @@
 # EGC 平台开发主要技术
 
+[toc]
+
 https://github.com/lreis2415/cybersolim
 
 项目相关文档资料：
@@ -165,15 +167,42 @@ MVC
 
 ### 3. MyBatis
 
-- 基本概念
-- [代码生成](https://github.com/lreis2415/DevelopMemo/blob/master/Java/MyBatis%20%E7%94%9F%E6%88%90%E5%99%A8%E9%85%8D%E7%BD%AE.md)
+- [基本概念](https://mybatis.org/mybatis-3/)
+
+- [根据数据库表自动生成代码](https://github.com/lreis2415/DevelopMemo/blob/master/Java/MyBatis%20%E7%94%9F%E6%88%90%E5%99%A8%E9%85%8D%E7%BD%AE.md)
+
+    自动生成的代码主要是
+
+    - `domain` 模块中的实体类
+    - `dao`模块中的 `Mapper` 和 相应的`XML`文件
+    - `service `模块中的 接口和默认实现类
+
+    生成代码的配置在dao模块的`resources/generatorConfig.xml`中。
+
+    开发过程中需要根据数据库表进行配置，如
+
+    ```xml
+    <table tableName="t_user_info" domainObjectName="UserInfo">
+        <property name="ignoreQualifiersAtRuntime" value="true"/>
+        <property name="useActualColumnNames" value="false"/>
+    	<!--如果数据库表设置了主键，并且是自增的（即包含序列 seq）-->    
+        <generatedKey column="user_id" sqlStatement="SELECT currval('t_user_info_user_id_seq')"
+                      identity="true"/>
+    </table>
+    ```
+
+    **注意**，不需要生成的数据库表配置应当注释掉，否则会一起生成代码
+
+    配置好之后，即可在maven面板（`View|Tool Windows|Maven`）的dao模块下双击`Plugins|mybatis-generator|generate`实现代码的生成
+
 - 生成代码更新
+
+    若修改了数据库表，可需要更新相应的 实体类和XML文件。此时可以重新自动生成相应的代码。目前的设置是不覆盖原来生成的代码。因此新生成的代码后缀名不是java，需要改过来（需要删除原来的代码）。**注意**，若原来生成的代码中添加了自定义的方法、SQL，这些自定义的代码需要复制到新生成的代码文件中。如果没有自定义代码，则可以直接删除原来的代码。
 
 ## Web Service
 - [Apache CXF](http://cxf.apache.org) （Java Web Service开发, SOAP & RESTFul）
 - [Apache ODE](http://ode.apache.org/) （Web Service 工作流）
 - [52° North WPS](http://52north.org/communities/geoprocessing/wps/) (WPS)
-- [GeoNetwork](https://geonetwork-opensource.org/) (CSW)
 
 ## 相关独立项目
 
