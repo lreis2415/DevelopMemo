@@ -172,11 +172,13 @@ https://router.vuejs.org/zh/
 
 - [maven配置](https://github.com/lreis2415/DevelopMemo/blob/master/Java/Maven%E9%85%8D%E7%BD%AE.md)
 
-- maven 私有库配置（nexus）
+- maven 私有库配置（nexus），查看有道云协作中文档
 
 ### 2. Spring MVC
 
-MVC
+[MVC 模式](https://www.runoob.com/design-pattern/mvc-pattern.html)
+
+[Spring MVC 4.2.4.RELEASE 中文文档](https://www.w3cschool.cn/spring_mvc_documentation_linesh_translation/)
 
 ### 3. MyBatis
 
@@ -188,7 +190,7 @@ MVC
 
     - `domain` 模块中的实体类
     - `dao`模块中的 `Mapper` 和 相应的`XML`文件
-    - `service `模块中的 接口和默认实现类
+    - `service `模块中的 接口和实现类
 
     生成代码的配置在dao模块的`resources/generatorConfig.xml`中。
 
@@ -210,17 +212,17 @@ MVC
 
 - 生成代码更新
 
-    若修改了数据库表，可需要更新相应的 实体类和XML文件。此时可以重新自动生成相应的代码。目前的设置是不覆盖原来生成的代码。因此新生成的代码后缀名不是java，需要改过来（需要删除原来的代码）。**注意**，若原来生成的代码中添加了自定义的方法、SQL，这些自定义的代码需要复制到新生成的代码文件中。如果没有自定义代码，则可以直接删除原来的代码。
+    若修改了数据库表，可需要更新相应的 实体类和XML文件。此时可以重新自动生成相应的代码。目前的设置是不覆盖原来生成的代码。因此新生成的代码后缀名不是java，需要改过来（需要删除原来的代码）。==**注意**==，若原来生成的代码中添加了自定义的方法、SQL，这些自定义的代码需要复制到新生成的代码文件中。如果没有自定义代码，则可以直接删除原来的代码。
 
 ## 命令行程序封装
 
 > [egc-commons](https://github.com/lreis2415/egc-commons)  项目中的 command 包
 >
 > 推荐使用 Apache Commons Exec 而不是 Java  自带的方法（参考 `org.egc.commons.command.InternalRuntime` 类）
->
-> 自带的方法可以参考 `org.egc.commons.command.InternalRuntime` 类
 
-- 手写代码
+- 手写代码（少量命令行程序时）
+
+    - 方式一：直接调用 CommandLine 的方法
 
     ```java
     //mpiexec -n 3 PitRemove -z H:/xcDEM.tif, -fel H:\out\xcDEM_pitFilled.tif
@@ -235,6 +237,8 @@ MVC
     Executor executor = new DefaultExecutor();
     executor.execute(commandLine);
     ```
+
+    - 方式二：调用 command 包中 CommonsExec 类封装之后的方法
 
 - 对与具有大量命令行需要封装的情况，查看基于模板的批量化封装方法
 
