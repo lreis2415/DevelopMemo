@@ -34,7 +34,13 @@ https://github.com/lreis2415/cybersolim
     
 - Windows、Linux 基本命令行操作
 
+## 文档
 
+> 有道云协作
+
+- 系统部署文档
+- Nexus Maven 私服配置
+- 
 
 ## 代码执行基本流程
 
@@ -99,7 +105,7 @@ Vue-cli 【了解】 Vue 开发脚手架
 
 了解 webpack
 
-自定义配置部分： `config/my.js`
+自定义配置部分： `config/my.js`、`assets/js/util/global.js`
 
 使用自定义配置：
 
@@ -129,9 +135,14 @@ https://router.vuejs.org/zh/
 
 ### 6. 界面设计
 
-[iView](https://www.iviewui.com/docs/guide/install)  【掌握】 基于Vue的UI组件库
+- [iView](https://www.iviewui.com/docs/guide/install)  【掌握】 基于Vue的UI组件库
 
-jsPanel
+- [jsPanel 官网](https://github.com/lreis2415/DevelopMemo/blob/master/Javascript/Nginx-%E4%BD%BF%E7%94%A8.md)
+
+    jsPanel for Vue 2（自定义的vue指令）使用方法：
+
+    - https://github.com/houzw/simple-vue-components/tree/master/jsPanel
+    - 或项目 WIKI
 
 ### 7. Axios
 
@@ -148,6 +159,8 @@ jsPanel
 ### 9. Nginx 
 
  一款轻量级的 Web 服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器，其特点是占有内存少，并发能力强。
+
+- [Nginx 使用](https://github.com/lreis2415/DevelopMemo/blob/master/Javascript/Nginx-%E4%BD%BF%E7%94%A8.md)
 
 - [Nginx开发从入门到精通](http://tengine.taobao.org/book/)
 
@@ -199,7 +212,40 @@ MVC
 
     若修改了数据库表，可需要更新相应的 实体类和XML文件。此时可以重新自动生成相应的代码。目前的设置是不覆盖原来生成的代码。因此新生成的代码后缀名不是java，需要改过来（需要删除原来的代码）。**注意**，若原来生成的代码中添加了自定义的方法、SQL，这些自定义的代码需要复制到新生成的代码文件中。如果没有自定义代码，则可以直接删除原来的代码。
 
+## 命令行程序封装
+
+> [egc-commons](https://github.com/lreis2415/egc-commons)  项目中的 command 包
+>
+> 推荐使用 Apache Commons Exec 而不是 Java  自带的方法（参考 `org.egc.commons.command.InternalRuntime` 类）
+>
+> 自带的方法可以参考 `org.egc.commons.command.InternalRuntime` 类
+
+- 手写代码
+
+    ```java
+    //mpiexec -n 3 PitRemove -z H:/xcDEM.tif, -fel H:\out\xcDEM_pitFilled.tif
+    CommandLine commandLine = new CommandLine("mpiexec");
+    commandLine.addArgument("-n");
+    commandLine.addArgument("3");
+    commandLine.addArgument("PitRemove");
+    commandLine.addArgument("-z");
+    commandLine.addArgument(dem);
+    commandLine.addArgument("-fel");
+    commandLine.addArgument("H:\\out\\xcDEM_pitFilled.tif");
+    Executor executor = new DefaultExecutor();
+    executor.execute(commandLine);
+    ```
+
+- 对与具有大量命令行需要封装的情况，查看基于模板的批量化封装方法
+
+    基本思路：将命令行组织为结构化的JSON文件，使用Freemarker设计模板，一次性生成所有命令行封装代码
+
+    https://gitee.com/vtech/knowledge-algo （目前是私有项目，联系侯志伟获取权限）
+
+
+
 ## Web Service
+
 - [Apache CXF](http://cxf.apache.org) （Java Web Service开发, SOAP & RESTFul）
 - [Apache ODE](http://ode.apache.org/) （Web Service 工作流）
 - [52° North WPS](http://52north.org/communities/geoprocessing/wps/) (WPS)
@@ -207,6 +253,6 @@ MVC
 ## 相关独立项目
 
 - [egc-commons](https://github.com/lreis2415/egc-commons)  公共基础功能
-- [egc-webservice](https://github.com/lreis2415/egc-webservices)  基于 Java 的 web service
+- [egc-webservices](https://github.com/lreis2415/egc-webservices)  基于 Java 的 web service
 - ~~easy-gis~~
 
