@@ -12,17 +12,15 @@ https://github.com/lreis2415/cybersolim
 
 ## 工具知识
 
--   Markdown  
-
-    >   推荐使用 Typora 编辑器
+-   Markdown  推荐使用 Typora 编辑器
 
 - Git
-  - 管理软件 SourceTree/Github Desktop/TortosiseGit
+  - 可视化管理软件 SourceTree/Github Desktop/TortosiseGit
   - [git flow的使用](https://www.cnblogs.com/lcngu/p/5770288.html)
   - [git 常用命令](http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html)
 
 - 开发工具
-    -   Java：IntelliJ IDEA(专业版/社区版)、MyEclipse、NetBeans、VS Code等
+    -   Java：IntelliJ IDEA(专业版/社区版)、VS Code等
     -   前端：VS Code、 Atom、Sublime Text 或直接使用 Java IDE
 
 - 开发类网站
@@ -38,9 +36,19 @@ https://github.com/lreis2415/cybersolim
 
 > 有道云协作
 
-- 系统部署文档
-- Nexus Maven 私服配置
-- 
+- 功能开发
+    - 功能设计
+    - cybersolim 开发注意事项
+- Java 开发
+    - **阿里巴巴 Java 开发手册**
+    - spring mvc 接受的请求参数
+- Vue开发
+    - Axios使用注意
+    - Vue使用注意
+- 系统开发-部署环境
+    - 系统开发-部署环境配置
+    - 开发环境-Maven配置（Markdown）
+    - Nodejs 安装配置
 
 ## 代码执行基本流程
 
@@ -113,7 +121,7 @@ Vue-cli 【了解】 Vue 开发脚手架
 
 - `build/webpack.dev.conf.js` 开发环境配置
 
-- `build/webpack.base.prod.js ` 生产环境配置
+- `build/webpack.prod.conf.js ` 生产环境配置
 
 ### 4. Vuex 状态
 
@@ -139,10 +147,22 @@ https://router.vuejs.org/zh/
 
 - [jsPanel 官网](https://github.com/lreis2415/DevelopMemo/blob/master/Javascript/Nginx-%E4%BD%BF%E7%94%A8.md)
 
-    jsPanel for Vue 2（自定义的vue指令）使用方法：
+    弹出窗体设计：jsPanel for Vue 2（自定义的vue指令）使用方法：
 
     - https://github.com/houzw/simple-vue-components/tree/master/jsPanel
-    - 或项目 WIKI
+    - 或 [项目 WIKI](https://github.com/lreis2415/cybersolim/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E9%9D%A2%E6%9D%BF%E7%BB%84%E4%BB%B6-JSPanel.vue)
+
+- 窗体工具栏 [Vue toolbar](https://github.com/lreis2415/cybersolim/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89Vue%E7%BB%84%E4%BB%B6-Vue-toolbar%E4%BD%BF%E7%94%A8) 
+
+- 如何避免测试时需要启动后台程序并登录
+
+    - 在`router/index.js`中为组件配置路由
+    - 在组件的路由中设置`  meta: { auth: false }`
+    - 访问`localhost:8090/[组件名]`
+
+- 注意：新增的组件需要注册为某个组件的子组件，最终以`Index.vue` 为根组件。例如，
+
+    `seims/ModelStructure.vue -> data/model/ModelTree.vue -> data/DataSidreBar.vue -> Index.vue`
 
 ### 7. Axios
 
@@ -154,7 +174,9 @@ https://router.vuejs.org/zh/
 
 参考：https://github.com/lreis2415/DevelopMemo/tree/master/Javascript/Axios
 
-### 8. 地图：[OpenLayers](http://openlayers.org/)
+### 8. 地图
+
+- [OpenLayers](http://openlayers.org/)
 
 ### 9. Nginx 
 
@@ -179,6 +201,12 @@ https://router.vuejs.org/zh/
 [MVC 模式](https://www.runoob.com/design-pattern/mvc-pattern.html)
 
 [Spring MVC 4.2.4.RELEASE 中文文档](https://www.w3cschool.cn/spring_mvc_documentation_linesh_translation/)
+
+
+
+**配置文件中路径的处理**
+
+不管最后有没有斜杠（`/`或`\\`），代码里面都在最后加上 `File.seperate`，然后使用`FilenameUtils.normalize()` 对整个路径进行标准化
 
 ### 3. MyBatis
 
@@ -213,6 +241,22 @@ https://router.vuejs.org/zh/
 - 生成代码更新
 
     若修改了数据库表，可需要更新相应的 实体类和XML文件。此时可以重新自动生成相应的代码。目前的设置是不覆盖原来生成的代码。因此新生成的代码后缀名不是java，需要改过来（需要删除原来的代码）。==**注意**==，若原来生成的代码中添加了自定义的方法、SQL，这些自定义的代码需要复制到新生成的代码文件中。如果没有自定义代码，则可以直接删除原来的代码。
+
+## 建模
+
+### 1. 本体文件
+
+
+
+### 2. 工作流
+
+
+
+### 3. 建模界面
+
+
+
+
 
 ## 命令行程序封装
 
