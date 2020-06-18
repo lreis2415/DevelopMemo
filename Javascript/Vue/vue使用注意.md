@@ -43,7 +43,31 @@ methods: {
      </tabpanel>
 </template>
 ```
+### 遍历数组
+
+>https://www.cnblogs.com/mmzuo-798/p/9435215.html
+
+```javascript
+<div v-for = "item in list" :key="index">{{ item }}</div>
+<div v-for = "(item,index) in list" :key="index">{{ item }}-{{ index }}</div>
+```
+
+### 遍历对象 key-value
+
+```javascript
+<div v-for = "value in kvs" :key="index">{{ value }}</div>
+<div v-for = "(value,key) in kvs" :key="index">{{ key }} - {{ value }}</div>
+<div v-for = "(value,key,index) in kvs" :key="index">{{ value }}-{{ key }} -{{ index }}</div>
+```
+
+### 遍历对象数组
+
+```javascript
+<div v-for = "(item,index) in objArr" :key="index">{{ item.value }}-{{ item.key }} -{{ index }}</div>
+```
+
 ## ajax中更新data
+
 假设在某方法getajax中执行ajax更新数据：**必须在ajax之外定义变量指代 vue实例的 `this`，ajax中的`this`不是vue 的 this！**
 ```javascript 
 getajax: function (url){

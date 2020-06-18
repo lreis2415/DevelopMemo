@@ -100,6 +100,8 @@ Axios get/post-> 用户界面 | Vue 组件: 显示响应数据
 ### 3. Vue 
 
 > https://cn.vuejs.org/v2/guide/
+>
+> https://wiki.jikexueyuan.com/project/vue-js/
 
 重点看  **基础**、**深入了解组件**、**路由**及**状态管理**
 
@@ -143,7 +145,18 @@ https://router.vuejs.org/zh/
 
 ### 6. 界面设计
 
-- [iView](https://www.iviewui.com/docs/guide/install)  【掌握】 基于Vue的UI组件库
+- [iView](https://www.iviewui.com/docs/guide/install)  【掌握】 基于Vue的UI组件库。最新版本改为 `View-Design`
+
+    若需要修改/覆盖`iView`默认的样式，需要取消`scoped` 或使用深度作用选择器 `/deep/`，如
+
+    ```scss
+    <style lang="scss" scoped>
+      /deep/ .frameItem .ivu-form-item-content{
+        border: solid 0.5px #88888830;
+        padding-left: 10px;
+      }
+    </style>
+    ```
 
 - [jsPanel 官网](https://github.com/lreis2415/DevelopMemo/blob/master/Javascript/Nginx-%E4%BD%BF%E7%94%A8.md)
 
@@ -163,6 +176,8 @@ https://router.vuejs.org/zh/
 - 注意：新增的组件需要注册为某个组件的子组件，最终以`Index.vue` 为根组件。例如，
 
     `seims/ModelStructure.vue -> data/model/ModelTree.vue -> data/DataSidreBar.vue -> Index.vue`
+    
+- 表单验证：使用的 [vee-validate](https://logaretm.github.io/vee-validate/) 而不是 iview 自带的验证方式。注意，vee-validate 的 2.x 与 3.x 写法差别较大，谨慎升级
 
 ### 7. Axios
 
@@ -190,6 +205,10 @@ https://router.vuejs.org/zh/
 
 ## 后台
 
+### 0. Spring MVC+ Spring + Mybatis 
+
+[Spring MVC+ Spring + Mybatis 框架介绍]( https://blog.csdn.net/qq_41701956/article/details/81215309)
+
 ### 1. maven 及 nexus
 
 - [maven配置](https://github.com/lreis2415/DevelopMemo/blob/master/Java/Maven%E9%85%8D%E7%BD%AE.md)
@@ -202,11 +221,14 @@ https://router.vuejs.org/zh/
 
 [Spring MVC 4.2.4.RELEASE 中文文档](https://www.w3cschool.cn/spring_mvc_documentation_linesh_translation/)
 
+#### Controller 中返回数据
 
+- 若需要返回数据和消息给用户，使用 `JsonResult`（直接使用 json 对象即可）。此时前端获取数据方式为`json.data.data` (取` JsonResult` 中的`data`属性)
+- 若只需要返回数据，则直接返回该数据对象即可。此时前端获取数据方式为`json.data`
 
-**配置文件中路径的处理**
+#### **配置文件中路径的处理**
 
-不管最后有没有斜杠（`/`或`\\`），代码里面都在最后加上 `File.seperate`，然后使用`FilenameUtils.normalize()` 对整个路径进行标准化
+不管最后有没有斜杠（`/`或`\\`），代码里面都在最后加上 `File.separator`，然后使用`FilenameUtils.normalize()` 对整个路径进行标准化
 
 ### 3. MyBatis
 
@@ -241,6 +263,28 @@ https://router.vuejs.org/zh/
 - 生成代码更新
 
     若修改了数据库表，可需要更新相应的 实体类和XML文件。此时可以重新自动生成相应的代码。目前的设置是不覆盖原来生成的代码。因此新生成的代码后缀名不是java，需要改过来（需要删除原来的代码）。==**注意**==，若原来生成的代码中添加了自定义的方法、SQL，这些自定义的代码需要复制到新生成的代码文件中。如果没有自定义代码，则可以直接删除原来的代码。
+    
+- mybatis配置
+
+    mybatis本身的配置（不是与Spring整合的配置）：dao模块下`src/resources/config/mybatis.xml`。包括 `typeAlias`，`typeHandler`等
+
+- `typeHandler` 将数据库类型（如`jdbcType="INTEGER"`）转换为对应的 java 类型。若某些数据库字段类型没有对应的 java  类型或无法自动转换（`jdbcType="OTHER"`），则需要自定义 `typeHandler` （如`PolygonTypeHandler`）进行转换。定义之后需要在`mybatis.xml`中进行配置，并添加到相应的`mapper.xml`中
+
+    ```xml
+    <result column="dataset_polygon" jdbcType="OTHER" property="datasetPolygon" typeHandler="PolygonTypeHandler" />
+    ```
+
+    此时，实体类中可以直接使用 postgis 的 Polygon 类型进行操作。例如，输出为 wkt
+
+    ```java
+    StringBuffer sb = new StringBuffer();
+    datasetPolygon.outerWKT(sb);
+    sb.toString();
+    ```
+
+    部分自定义类型见`org.egc.cybersolim.mybatis;`
+
+    
 
 ## 建模
 
@@ -290,7 +334,9 @@ https://router.vuejs.org/zh/
 
     https://gitee.com/vtech/knowledge-algo （目前是私有项目，联系侯志伟获取权限）
 
+- Freemarker 模板
 
+    http://freemarker.foofun.cn/toc.html
 
 ## Web Service
 
