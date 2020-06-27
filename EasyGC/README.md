@@ -97,6 +97,25 @@ Axios get/post-> 用户界面 | Vue 组件: 显示响应数据
 
 [NodeJS的安装与基本使用](https://github.com/lreis2415/DevelopMemo/blob/master/Javascript/NodeJS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8.md)
 
+**如果`npm install`失败**
+
+```
+npm ERR! phantomjs-prebuilt@2.1.14 install: `node install.js`
+npm ERR! Exit status 1
+```
+
+试试：
+
+```
+npm install phantomjs-prebuilt@2.1.14 --ignore-scripts
+```
+
+For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+**如果`npm run dev`出现`ENOENT: no such file or directory, scandir '...\cybersolim\cybersolim-frontend\node_modules\node-sass\vendor'`错误**
+
+执行 `sudo npm rebuild node-sass`
+
 ### 3. Vue 
 
 > https://cn.vuejs.org/v2/guide/
@@ -158,6 +177,19 @@ https://router.vuejs.org/zh/
     </style>
     ```
 
+    若在`index-prod.html`中配置使用 iview 的CDN，则需要在自定义配置文件 `my.js` 的 `exports.externals`中进行如下配置
+
+    ```javascript
+    exports.externals = {
+      vue: 'Vue',
+      "view-design": 'iview',
+      "iview": 'ViewUI',
+       //...
+    };
+    ```
+
+    如果只是简单的`"view-design": 'ViewUI'`，则会报错
+
 - [jsPanel 官网](https://github.com/lreis2415/DevelopMemo/blob/master/Javascript/Nginx-%E4%BD%BF%E7%94%A8.md)
 
     弹出窗体设计：jsPanel for Vue 2（自定义的vue指令）使用方法：
@@ -192,6 +224,8 @@ https://router.vuejs.org/zh/
 ### 8. 地图
 
 - [OpenLayers](http://openlayers.org/)
+- [ol-ext](https://github.com/Viglino/ol-ext)  一系列扩展插件
+- https://github.com/jonataswalker/ol-contextmenu
 
 ### 9. Nginx 
 
@@ -215,6 +249,8 @@ https://router.vuejs.org/zh/
 
 - maven 私有库配置（nexus），查看有道云协作中文档
 
+    > **注意**：上传构件（`jar`）到 nexus 时一定要把`Generate a POM file with these coordinates` 复选框选中，否则后续可能出现`Could not find artifact xxx in nexus`的问题
+
 ### 2. Spring MVC
 
 [MVC 模式](https://www.runoob.com/design-pattern/mvc-pattern.html)
@@ -228,7 +264,9 @@ https://router.vuejs.org/zh/
 
 #### **配置文件中路径的处理**
 
-不管最后有没有斜杠（`/`或`\\`），代码里面都在最后加上 `File.separator`，然后使用`FilenameUtils.normalize()` 对整个路径进行标准化
+不管最后有没有斜杠（`/`或`\\`），代码里面都在最后加上 `File.separator`，然后使用`FilenameUtils.normalize()` 对整个路径进行标准化。
+
+
 
 ### 3. MyBatis
 
@@ -284,7 +322,18 @@ https://router.vuejs.org/zh/
 
     部分自定义类型见`org.egc.cybersolim.mybatis;`
 
-    
+
+## 数据库
+
+### PostgreSQL
+
+
+
+### PostGIS
+
+https://postgis.net/docs/index.html
+
+
 
 ## 建模
 

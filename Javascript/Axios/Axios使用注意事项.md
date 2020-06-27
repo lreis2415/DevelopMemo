@@ -7,7 +7,8 @@ https://github.com/mzabriskie/axios/issues/350
 >JQuery的ajax默认不是JSON
 
 使用axios发送Ajax请求时，通过Request Headers 可以发现 Content-Type 默认为 `application/json;charset=UTF-8`。
-此时，发送请求的数据在request的body中，而不是在url中。因此，Spring MVC 的Controller中** 不能使用 `@RequestParam` 或 `String XX`的形式获取到请求参数！**。必须使用**`@RequestBody`**注解到实体类（不是单一的参数，如`@RequestBody String xxx` 是不行的）（确保配置了 `message-converters`，使用Jackson或FastJSON）
+此时，发送请求的数据在request的body中，而不是在url中。因此，Spring MVC 的Controller中**不能使用 `@RequestParam` 或 `String XX`的形式获取到请求参数！**。必须使用**`@RequestBody`**注解到实体类（不是单一的参数，如`@RequestBody String xxx` 是不行的）（确保配置了 `message-converters`，使用Jackson或FastJSON）
+
 >[Post JSON to spring REST webservice](https://www.leveluplunch.com/java/tutorials/014-post-json-to-spring-rest-webservice/)
 
 ## 使用常规形式( 即`application/x-www-form-urlencoded` )发送请求数据
@@ -47,7 +48,6 @@ axios.post('/foo', querystring.stringify({
   params: { foo: 'bar' } // query string
 });
 
-
 ```
 ## params 部分可以使用`@RequestParam`获取
 >data 部分不行
@@ -55,8 +55,7 @@ axios.post('/foo', querystring.stringify({
 this.$http.post('/project/create', this.project, { params: { a: 'test' } }
 ).then(）
 ```
-后台
-`@RequestParam String a`
+后台`@RequestParam String a`
 ### Spring MVC接收 JSON 类型参数
 在方法参数中使用注解`@RequestBody `绑定 json 到实体类 POJO
 ```java
@@ -84,7 +83,7 @@ public Object doLogin(@RequestBody Map map) throws Exception {
 
 ### 结合FormData上传文件
 
-需要设置传输数据类型为'multipart/form-data'
+需要设置传输数据类型为`multipart/form-data`
 
 ```Javascript
 let formData = new FormData()
