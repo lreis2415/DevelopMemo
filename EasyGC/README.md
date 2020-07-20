@@ -252,7 +252,7 @@ https://router.vuejs.org/zh/
 
     > **注意**：上传构件（`jar`）到 nexus 时一定要把`Generate a POM file with these coordinates` 复选框选中，否则后续可能出现`Could not find artifact xxx in nexus`的问题
     
-- maven jetty 配置热部署, 修改代码之后，无需手动重启  (修改之后需要 `ctrl+shift+F9` 编译，`ctrl+F9`生成项目)
+- maven jetty 配置热部署, 修改代码之后，无需手动重启  (修改之后需要 `ctrl+shift+F9` 编译，`ctrl+F9`生成项目（可选）)
 
     > [maven-jetty-plugin-automatic-reload-using-a-multi-module-project](https://stackoverflow.com/questions/25725552/maven-jetty-plugin-automatic-reload-using-a-multi-module-project) 
 
