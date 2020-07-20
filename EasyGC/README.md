@@ -21,8 +21,9 @@ https://github.com/lreis2415/cybersolim
 
 - 开发工具
     -   Java：IntelliJ IDEA(专业版/社区版)、VS Code等
-    -   前端：VS Code、 Atom、Sublime Text 或直接使用 Java IDE
-
+    -   [IDEA 插件](https://github.com/lreis2415/DevelopMemo/blob/master/Java/Intellj%20IDEA%E6%8F%92%E4%BB%B6%E6%8E%A8%E8%8D%90.md)
+-   前端：VS Code、 Atom、Sublime Text 或直接使用 Java IDE
+  
 - 开发类网站
     -   Google、百度
     -   各种开发框架、库的官方主页
@@ -250,6 +251,38 @@ https://router.vuejs.org/zh/
 - maven 私有库配置（nexus），查看有道云协作中文档
 
     > **注意**：上传构件（`jar`）到 nexus 时一定要把`Generate a POM file with these coordinates` 复选框选中，否则后续可能出现`Could not find artifact xxx in nexus`的问题
+    
+- maven jetty 配置热部署, 修改代码之后，无需手动重启  (修改之后需要 `ctrl+shift+F9` 编译，`ctrl+F9`生成项目)
+
+    > [maven-jetty-plugin-automatic-reload-using-a-multi-module-project](https://stackoverflow.com/questions/25725552/maven-jetty-plugin-automatic-reload-using-a-multi-module-project) 
+
+    ```xml
+    <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.4.27.v20200227</version>
+        <configuration>
+            <webApp>
+                <webInfIncludeJarPattern>^$</webInfIncludeJarPattern>
+                <containerIncludeJarPattern>^$</containerIncludeJarPattern>
+            </webApp>
+            <!-- 扫描项目变更的时间间隔，默认为0不扫描 -->
+            <scanIntervalSeconds>1</scanIntervalSeconds>
+            <reload>automatic</reload>
+            <!--扫描子模块代码的变动-->
+            <scanTargetPatterns>
+                <scanTargetPattern>
+                    <directory>${project.basedir}</directory>
+                    <includes>
+                        <include>**/target/classes/**/*.class</include>
+                    </includes>
+                </scanTargetPattern>
+            </scanTargetPatterns>
+        </configuration>
+    </plugin>
+    ```
+
+    
 
 ### 2. Spring MVC
 
@@ -298,11 +331,23 @@ https://router.vuejs.org/zh/
 
     配置好之后，即可在maven面板（`View|Tool Windows|Maven`）的dao模块下双击`Plugins|mybatis-generator|generate`实现代码的生成
 
+- Mapper 接口中，方法若拥有多个参数，则必须使用`@Param` 对参数名称进行注释，否则执行时生成默认参数名：param1，param2...
+
+    ```java
+    List<DatasetPolygon> findByPoint(@Param("x") double x, @Param("y") double y, @Param("srid") int srid, @Param("userId") int userId);
+    ```
+
 - 生成代码更新
 
-    若修改了数据库表，可需要更新相应的 实体类和XML文件。此时可以重新自动生成相应的代码。目前的设置是不覆盖原来生成的代码。因此新生成的代码后缀名不是java，需要改过来（需要删除原来的代码）。==**注意**==，若原来生成的代码中添加了自定义的方法、SQL，这些自定义的代码需要复制到新生成的代码文件中。如果没有自定义代码，则可以直接删除原来的代码。
+    若修改了数据库表，可需要更新相应的 实体类和XML文件。此时可以重新自动生成相应的代码。目前的设置是不覆盖原来生成的代码。因此新生成的代码后缀名不是java，需要改过来（需要删除原来的代码）。
     
-- mybatis配置
+    ==**注意**==，若原来生成的代码中添加了自定义的方法、SQL，
+    
+    - 对于`mapper`和`service`的java文件，可以直接删除**新生成的代码**。
+    - 对于实体类，这些自定义的代码需要复制到新生成的代码文件中。如果没有自定义代码，则可以直接删除原来的代码。
+    - 对于XML文件，新的内容会**直接生成到原来的XML文件中**，因此，需要**注意删除重复的内容**。例如，XML中会存在两个id为`BaseResultMap`的 resultMap，需要删除旧的（位于文件上部的一般为**新生成**的），否则启动会报错。安装相应的mybatis插件之后，IDE 会提示。
+    
+- **mybatis配置**
 
     mybatis本身的配置（不是与Spring整合的配置）：dao模块下`src/resources/config/mybatis.xml`。包括 `typeAlias`，`typeHandler`等
 
@@ -321,6 +366,21 @@ https://router.vuejs.org/zh/
     ```
 
     部分自定义类型见`org.egc.cybersolim.mybatis;`
+    
+- [MyBatis关联嵌套映射（association、collection、discriminator）](https://blog.csdn.net/pan_junbiao/article/details/103459886)
+
+
+
+### 4. 测试
+
+- 后台单元测试采用`junit`
+
+- Restful 接口测试可采用 postman。
+
+    注意，系统验证方式为 JWT，因此需要对 postman 做一些设置。具体操作参考以下博客。此外，传给后端的密码是经过前端加密的，因此需要先登录一次以获取生成的密码和用于解密的`aesKey`，不能直接在postman使用用户密码。
+
+    - [postman登录鉴权，获取token后进行其他接口测试](https://blog.csdn.net/qq_42512064/article/details/81034744) 
+    - [postman设置token、authorization认证信息传参](https://blog.csdn.net/romon19/article/details/84662542)
 
 
 ## 数据库

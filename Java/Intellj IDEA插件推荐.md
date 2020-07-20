@@ -1,4 +1,4 @@
-#IntelliJ IDEA插件推荐
+# IntelliJ IDEA插件推荐
 
 **“工欲善其事必先利其器”**
 
@@ -11,9 +11,18 @@ IntelliJ IDEA是一款优秀的Java开发IDE，结合各种插件，可以极大
 
 https://blog.csdn.net/sujun10/article/details/72852939
 
-https://blog.csdn.net/xlgen157387/article/details/78970079?utm_source=tuicool&utm_medium=referral 
+https://blog.csdn.net/xlgen157387/article/details/78970079?utm_source=tuicool&utm_medium=referral 等
 
-等
+## 必备
+
+-  插件，简化Java 代码编写。安装使用简介：https://zhuanlan.zhihu.com/p/32779910
+
+    注意，安装之后需要启用IDEA的 **Enabling Annotation Processing**
+
+- VueJs插件
+
+- FreeMyBatisPlugin
+
 ### 编辑器增强
 - **Key promoter** 快捷键提示插件
 
